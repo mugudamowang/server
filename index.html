@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSONP-TEST</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <span id="amount">#amount#</span>
+    <button id="call">call -1</button>
+    <script>
+        //jquery实现方案+promise写法
+        call.addEventListener("click",(e)=>
+        {
+            $.ajax({
+            url: "http://localhost:8888/pay",
+            method: 'get'
+            }).then(
+            (response)=>{amount.innerText = amount.innerText - 1},
+            (request)=>{console.log('获取失败')}
+        )
+        })
+        
+    </script>
+    <!-- <script>
+        //原生实现方法
+        let callback = 'mugu' + parseInt(Math.random() * 10000, 10)
+        window[callback] = function (result) {
+            alert('callback~')
+            alert(`${result}`)
+            amount.innerText = amount.innerText - 1
+        }
+        call.addEventListener('click', (e) => {
+            let script = document.createElement('script')
+            script.src = 'http://localhost:8001/pay?callback=' + callback
+            document.body.appendChild(script)
+            script.onload = function (e) {
+                e.currentTarget.remove()
+            }
+            script.onerror = function (e) {
+                alert('fail')
+                e.currentTarget.remove()
+            }
+        })
+    </script> -->
+</body>
+
+</html>
